@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MVC2.Models.Comment>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+
+
+@foreach (var item in Model) {
+
+    <div class="media">
+        <a class="pull-left" href="#">
+            <img class="media-object" src="/griny/images/team.jpg">
+        </a>
+        <div class="media-body">
+            <div class="clearfix">
+                <h4 class="media-heading">@Html.DisplayFor(modelItem => item.Author.FirstName) @Html.DisplayFor(modelItem => item.Author.LastName)</h4>
+                <p>@Html.DisplayFor(modelItem => item.Body)</p>
+                <time datetime="" class="pull-left">@item.Created.ToString("MM/dd/yy - hh:mm")</time>&nbsp;&nbsp;&nbsp;&nbsp;
+                @*<a href="#" class="pull-right"><i class="icon-share-alt"></i> Reply</a>*@
+                <a>
+                    @Html.ActionLink("Edit", "Edit", "Comments", new { id = item.Id }, null) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </a>
+            </div>
+        </div>
+      </div>
+
+}
+@*<a class="btn pull-right" href="@Html.Partial("_AddComment", )">
+    <span class="icon" /> Add Comment
+</a>*@
+
+
+        
+

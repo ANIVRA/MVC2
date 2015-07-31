@@ -1,0 +1,93 @@
+﻿@model MVC2.Models.Post
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm("Create", "Posts", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+{
+
+    @Html.HiddenFor(model => model.AuthorId)
+    @Html.HiddenFor(model => model.Created)
+    @Html.HiddenFor(model => model.Updated)
+
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Post</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+
+                @*<div class="col-md-10">
+                    <textarea name="editor1" id="editor1" rows="10" cols="80">
+                        @Model.Body
+                    </textarea>
+                    Html.TextAreaFor(model => model.Body, 10, 80, new { @name = "editor1", @id = "editor1" })
+                </div>*@
+            </div>
+        </div>
+
+
+        @*<p>@Html.Raw(HttpUtility.HtmlDecode(item.BodyText))</p>*@
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.MediaURL)
+            @Html.Label("Image Upload", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div>
+                &nbsp;<input type="file" id="fileUpload" name="fileUpload" value="~/griny/images/image_1.jpg" />
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section scripts{
+    <script>
+
+
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('editor1');
+
+        //CKEDITOR.replace('Body', {
+        //    filebrowserBrowseUrl: '/browser/browse.php',
+        //    filebrowserUploadUrl: '/uploader/upload.php',
+        //    height: 200, width: 800,
+        //    toolbar: [
+        //        ['Styles', 'Format', 'Font', 'FontSize'],
+        //            '/',
+        //        ['Bold', 'Italic', 'Underline', 'StrikeThrough', '-', 'Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'Find', 'Replace', '-', 'Outdent', 'Indent', '-', 'Print'],
+        //        '/',
+        //        ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+        //        ['Image', 'Table', '-', 'Link', 'Flash', 'Smiley', 'TextColor', 'BGColor', 'Source']
+        //    ]
+        //});
+    </script>
+}
+

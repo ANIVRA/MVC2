@@ -1,0 +1,32 @@
+﻿@model MVC2.Models.Comment
+
+@{
+    ViewBag.Title = "Create";
+}
+@using MVC2.Models
+@using Microsoft.AspNet.Identity
+<div class="span8">
+    <div class="section">
+        <h3 class="with-border"><i class="icon-comments"></i></h3>
+
+        @using (Html.BeginForm("Create", "Comments", FormMethod.Post, htmlAttributes: new { @class = "form margin-top-15 clearfix" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.EditorFor(model => model.Author.DisplayName, new { htmlAttributes = new { @type = "text", @class = "span12", @placeholder = User.Identity.GetUserName().ToString(), @name = "name", @readonly="readonly"} })
+            @Html.ValidationMessageFor(model => model.Author.DisplayName, "", new { @class = "text-danger" })
+
+            @*@Html.EditorFor(model => model.Author.Email, new { htmlAttributes = new { @type = "email", @class = "span12", @placeholder = Model.Author.Email, @name = "email" @readonly} })
+            @Html.ValidationMessageFor(model => model.Author.Email, "", new { @class = "text-danger" })*@
+
+            @Html.TextAreaFor(model => model.Body, htmlAttributes: new { @class = "span12", @placeholder = "Message", @name = "message", @rows = "7" })
+            @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+
+            <button type="submit" class="btn pull-right margin-top-15">Add Comment</button>
+        }
+    </div>
+    <h3 class="with-border"></h3>
+    <div>
+        @Html.ActionLink("Cancel", "Details", "Posts", routeValues: new { id = Model.PostId }, htmlAttributes: new { @class = "btn" })
+    </div>
+</div>

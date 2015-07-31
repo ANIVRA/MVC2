@@ -1,0 +1,131 @@
+﻿@model PagedList.IPagedList<MVC2.Models.Post>
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    #search .submit {
+        width: 36px;
+        height: 28px;
+        border: 0;
+        background: url('/images/search.png') no-repeat;
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+    }
+</style>
+<section class="text-block">
+    <div class="light-bg">
+        <div class="">
+
+            <h2 class="with-border">
+                Blog
+                @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                {
+                    <small class="color">
+                        / @Html.ActionLink("New Post", "Create", "Posts")
+                    </small>
+                }
+            </h2>
+            <div class="span8">
+                <ul class="thumbnails">
+                    @foreach (var item in Model)
+                    {
+                        <div class="span3">
+                            <li>
+                                <div class="thumbnail">
+                                    <div class="img-wrap">
+                                        <a href="@Url.Action("Details", "Posts", new { id = item.Id })"><img src="@Url.Content(item.MediaURL)" /></a>
+                                    </div>
+
+                                    <h3 class="with-border">@Html.DisplayFor(modelItem => item.Title)</h3>
+
+                                    <div class="info-panel">
+                                        <span><time datetime=""><i class="icon-calendar "></i> @item.Created.ToString("MMM dd, yyyy")</time></span>
+                                        <span><i class="icon-user"></i> </span>
+                                        <span><i class="icon-comments"></i> <a href="@Url.Action("Details", "Posts", new { id = item.Id })">@item.Comments.Count comment(s)</a></span>
+                                    </div>
+
+                                    <div class="box">
+                                        @Html.DisplayFor(modelItem => item.Body)
+                                    </div>
+
+                                    @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                                    {
+                                        @Html.ActionLink("Edit ", "Edit", new { id = item.Id })<a>|</a>
+                                        @*@Html.ActionLink("Details", "Details", new { id = item.Id })<a>|</a>*@
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    }
+
+                                    <a class="btn pull-right" href="@Url.Action("Details", "Posts", new { id = item.Id })">
+                                        <span class="icon a-btn-icon-right" /> Read More
+                                    </a>
+                                </div>
+                            </li>
+                        </div>
+                    }
+                </ul>
+            </div>
+            <div class=""></div>
+            <div class="span3">
+
+                @using (Html.BeginForm("Index", "Posts", FormMethod.Post, htmlAttributes: new { @class = "form" }))
+                {
+                    <div class="controls controls-row search-row">
+                        <input id="searchStr" name="searchStr" class="input-block-level" type="text" placeholder="Search">
+                        <button id="searchStr" name="searchStr" class="btn btn-success" type="submit">
+                            <i class="icon-search"></i>
+                        </button>
+                    </div>
+                }
+
+                <article>
+                    <h4 class="with-border">Categories</h4>
+                    <ul class="unstyled link-list">
+                        <li class=""><a href="#"><i class="icon-chevron-right"></i> Design</a></li>
+                        <li class=""><a href="#"><i class="icon-chevron-right"></i> Development</a></li>
+                        <li class=""><a href="#"><i class="icon-chevron-right"></i> Usability</a></li>
+                        <li class=""><a href="#"><i class="icon-chevron-right"></i> Support</a></li>
+                        <li class=""><a href="#"><i class="icon-chevron-right"></i> Advertisement</a></li>
+                    </ul>
+                </article>
+                <article class="section">
+                    <h4 class="with-border">Tags</h4>
+                    <ul class="unstyled">
+                        <a href="#" class="tag btn btn-primary">Web</a>
+                        <a href="#" class="tag btn btn-primary">Games</a>
+                        <a href="#" class="tag btn btn-primary">Design</a>
+                        <a href="#" class="tag btn btn-primary">3D</a>
+                        <a href="#" class="tag btn btn-primary">jQuery</a>
+                        <a href="#" class="tag btn btn-primary">C#</a>
+                        <a href="#" class="tag btn btn-primary">Bootstrap</a>
+                        <a href="#" class="tag btn btn-primary">Google</a>
+                        <a href="#" class="tag btn btn-primary">JavaScript</a>
+                    </ul>
+                </article>
+                <article class="section">
+                    <h4 class="with-border">Featured videos</h4>
+                    <div class="videoWrapper">
+                        <iframe src="https://player.vimeo.com/video/20596477" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    </div>
+                </article>
+                <article class="section">
+                    <div class="videoWrapper">
+                        <iframe src="https://player.vimeo.com/video/114432000" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    </div>
+                </article>
+                <article class="section">
+                    <h4 class="with-border"></h4>
+
+                </article>
+            </div>
+
+        </div>
+        <div class="span6">
+            <p class="pull-right">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</p>
+            <p class="pull-right">@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))</p>
+        </div>
+    </div>
+</section>

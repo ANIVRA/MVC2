@@ -1,0 +1,91 @@
+﻿@model MVC2.Models.Comment
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<section class="text-block">
+    <div class="light-bg">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span9">
+                    <div class="section">
+                        <h3 class="with-border"><i class="icon-comments"></i></h3>
+
+                        @using (Html.BeginForm("Create", "Comments", FormMethod.Post, htmlAttributes: new { @class = "form margin-top-15 clearfix" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            @Html.HiddenFor(model => model.PostId)
+                            @Html.HiddenFor(model => model.AuthorId)
+                            @Html.HiddenFor(model => model.Created)
+
+                            @Html.EditorFor(model => model.Author.DisplayName, new { htmlAttributes = new { @type = "text", @class = "span12", @placeholder = "Name", @name = "name" } })
+                            @Html.ValidationMessageFor(model => model.Author.DisplayName, "", new { @class = "text-danger" })
+
+                            @Html.EditorFor(model => model.Author.Email, new { htmlAttributes = new { @type = "email", @class = "span12", @placeholder = "Email", @name = "email" } })
+                            @Html.ValidationMessageFor(model => model.Author.Email, "", new { @class = "text-danger" })
+
+                            @Html.TextAreaFor(model => model.Body, htmlAttributes: new { @class = "span12", @placeholder = "Message", @name = "message", @rows = "7" })
+                            @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+
+                            <button type="submit" class="btn pull-right margin-top-15">Add Comment</button>
+
+                        }
+                    </div>
+                    <h3 class="with-border"></h3>
+                    <div>
+                        @Html.ActionLink("Cancel", "Details", "Posts", routeValues: new { id = Model.PostId }, htmlAttributes: new { @class = "btn" })
+                    </div>
+                </div>
+                <!--div class="span3">
+                    <form class="form">
+                        <div class="controls controls-row search-row">
+                            <input class="input-block-level" type="text" placeholder="Search">
+                            <button class="btn" type="button"><i class="icon-search"></i></button>
+                        </div>
+                    </form>
+                    <article>
+                        <h4 class="with-border">Categories</h4>
+                        <ul class="unstyled link-list">
+                            <li class=""><a href="#"><i class="icon-chevron-right"></i> Design</a></li>
+                            <li class=""><a href="#"><i class="icon-chevron-right"></i> Development</a></li>
+                            <li class=""><a href="#"><i class="icon-chevron-right"></i> Usability</a></li>
+                            <li class=""><a href="#"><i class="icon-chevron-right"></i> Support</a></li>
+                            <li class=""><a href="#"><i class="icon-chevron-right"></i> Advertisement</a></li>
+                        </ul>
+                    </article>
+                    <article class="section">
+                        <h4 class="with-border">Tags</h4>
+                        <ul class="unstyled">
+                            <a href="#" class="tag btn btn-primary">Web</a>
+                            <a href="#" class="tag btn btn-primary">Games</a>
+                            <a href="#" class="tag btn btn-primary">Design</a>
+                            <a href="#" class="tag btn btn-primary">3D</a>
+                            <a href="#" class="tag btn btn-primary">jQuery</a>
+                            <a href="#" class="tag btn btn-primary">C++</a>
+                            <a href="#" class="tag btn btn-primary">Bootstrap</a>
+                            <a href="#" class="tag btn btn-primary">Google</a>
+                            <a href="#" class="tag btn btn-primary">JavaScript</a>
+                        </ul>
+                    </article>
+                    <article class="section">
+                        <h4 class="with-border">Featured videos</h4>
+                        <div class="videoWrapper">
+                            <iframe src="https://player.vimeo.com/video/20596477" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        </div>
+                    </article>
+                    <article class="section">
+                        <div class="videoWrapper">
+                            <iframe src="https://player.vimeo.com/video/114432000" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/114432000">The ChristmasXP Trailer</a> from <a href="https://vimeo.com/user1670434">deric roger cook</a> on <a href="https://vimeo.com">Vimeo</a>.</p> <p>This Is The Official Trailer For &quot;The Christmas Experience&quot; Event...Coming Christmas 2015</p>
+                        </div>
+                    </article>
+                    <article class="section">
+                        <h4 class="with-border"></h4>
+
+                    </article>
+                </div-->
+            </div>
+        </div>
+    </div>
+</section>
